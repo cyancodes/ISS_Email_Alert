@@ -1,8 +1,16 @@
 import requests
-from config import *
 from datetime import datetime
 import smtplib
 import time
+import os
+
+MY_LAT = float(os.environ.get("MY_LAT"))  # Your latitude
+MY_LONG = float(os.environ.get("MY_LONG"))  # Your longitude
+
+EMAIL = os.environ.get("EMAIL")
+PASSWORD = os.environ.get("PASSWORD")
+
+OWM_API_KEY = os.environ.get("OWM_API_KEY")
 
 
 # Your position is within +5 or -5 degrees of the ISS position.
@@ -44,7 +52,7 @@ def low_cloud_cover():
         "lat": MY_LAT,
         "lon": MY_LONG,
         "units": "metric",
-        "appid": API_KEY
+        "appid": OWM_API_KEY
     }
 
     cloud_response = requests.get("https://api.openweathermap.org/data/3.0/onecall", params=parameters)
@@ -58,10 +66,10 @@ def low_cloud_cover():
 while within_5() and hour_between() and low_cloud_cover():
     with smtplib.SMTP("smtp.gmail.com") as connection:
         connection.starttls()
-        connection.login(user=MY_EMAIL, password=MY_PASSWORD)
+        connection.login(user=EMAIL, password=PASSWORD)
         connection.sendmail(
-            from_addr=MY_EMAIL,
-            to_addrs=MY_PASSWORD,
+            from_addr=EMAIL,
+            to_addrs=PASSWORD,
             msg=f"Subject:ISS ALERT\n\nLook up, the ISS is about!"
         )
     time.sleep(60)
