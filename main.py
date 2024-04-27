@@ -17,7 +17,7 @@ def within_5():
 
     if abs(MY_LAT - iss_latitude) <= 5 and abs(MY_LONG - iss_longitude) < 5:
         return True
-á
+
 
 #  Checks that the current hour is between sunrise and sunset in your location
 def hour_between():
