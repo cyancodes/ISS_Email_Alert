@@ -69,7 +69,7 @@ while within_5() and hour_between() and low_cloud_cover():
         connection.login(user=EMAIL, password=PASSWORD)
         connection.sendmail(
             from_addr=EMAIL,
-            to_addrs=PASSWORD,
+            to_addrs=EMAIL,
             msg=f"Subject:ISS ALERT\n\nLook up, the ISS is about!"
         )
     time.sleep(60)
